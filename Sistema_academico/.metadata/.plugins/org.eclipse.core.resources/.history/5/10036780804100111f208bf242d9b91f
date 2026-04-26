@@ -1,0 +1,219 @@
+package sistemaAcademico;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
+import java.awt.event.KeyEvent;
+import java.awt.event.InputEvent;
+import javax.swing.JSeparator;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JTabbedPane;
+import javax.swing.JLabel;
+import javax.swing.JFormattedTextField;
+
+public class Gui extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Gui frame = new Gui();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Gui() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 573, 351);
+		//Margem que guarda o menu superior
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu mnAluno = new JMenu("Aluno");
+		menuBar.add(mnAluno);
+		
+		JMenuItem mntmSalvar_Aluno = new JMenuItem("Salvar");
+		mntmSalvar_Aluno.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
+		mnAluno.add(mntmSalvar_Aluno);
+		
+		JMenuItem mntmAlterar_Aluno = new JMenuItem("Alterar");
+		mnAluno.add(mntmAlterar_Aluno);
+		
+		JMenuItem mntmConsultar_Aluno = new JMenuItem("Consultar");
+		mnAluno.add(mntmConsultar_Aluno);
+		
+		JMenuItem mntmExcluir_Aluno = new JMenuItem("Excluir");
+		mnAluno.add(mntmExcluir_Aluno);
+		
+		JSeparator separator = new JSeparator();
+		mnAluno.add(separator);
+		
+		//Botao para sair que esta dentro do menu superior Aluno
+		JMenuItem mntmSair_Aluno = new JMenuItem("Sair");
+		mntmSair_Aluno.addActionListener(new ActionListener() {
+			//Metodo para fechar o aplicativo
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		mntmSair_Aluno.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.SHIFT_DOWN_MASK));
+		mnAluno.add(mntmSair_Aluno);
+		
+		JMenu mnNotasFaltas = new JMenu("Notas e Faltas");
+		menuBar.add(mnNotasFaltas);
+		
+		JMenuItem mntmSalvar_Nf = new JMenuItem("Salvar");
+		mnNotasFaltas.add(mntmSalvar_Nf);
+		
+		JMenuItem mntmAlterar_Nf = new JMenuItem("Alterar");
+		mntmAlterar_Nf.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_DOWN_MASK));
+		mnNotasFaltas.add(mntmAlterar_Nf);
+		
+		JMenuItem mntmExcluir_Nf = new JMenuItem("Excluir");
+		mnNotasFaltas.add(mntmExcluir_Nf);
+		
+		JMenuItem mntmConsultar_Nf = new JMenuItem("Consultar");
+		mnNotasFaltas.add(mntmConsultar_Nf);
+		//Menu Ajuda
+		JMenu mnAjuda = new JMenu("Ajuda");
+		menuBar.add(mnAjuda);
+		//Botao Sobre no menu Ajuda
+		JMenuItem mntmSobre_Ajuda = new JMenuItem("Sobre");
+		mntmSobre_Ajuda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//====================
+				//Comando para mostrar mensagem em uma nova janela ao apertar o botao
+				JOptionPane.showMessageDialog(null,"informações do Menu");
+				
+				//====================
+			}
+		});
+		mnAjuda.add(mntmSobre_Ajuda);
+		//====================== INICIO CONTENTPANE
+		//Area de delimitacao do conteudo principal da janela
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		//======================= INICIO TABBEDPANE
+		// Area de delimitacao do menu interno do sistema
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBounds(10, 63, 537, 335);
+		//======================= FIM TABBEDPANE
+		contentPane.add(tabbedPane);
+		
+		//==================== INICIO MENU DADOS PESSOAIS\
+		/*
+		 * lbl == LABEL
+		 * ftf == JFormattedTextField
+		 * 
+		 * */
+		
+		JPanel panel_Dados_Pessoais = new JPanel();
+		tabbedPane.addTab("Dados Pessoais", null, panel_Dados_Pessoais, null);
+		panel_Dados_Pessoais.setLayout(null);
+		
+		JLabel lblRgm = new JLabel("RGM");
+		lblRgm.setBounds(10, 11, 46, 14);
+		panel_Dados_Pessoais.add(lblRgm);
+		
+		JFormattedTextField ftf_Rgm = new JFormattedTextField();
+		ftf_Rgm.setBounds(48, 8, 103, 20);
+		panel_Dados_Pessoais.add(ftf_Rgm);
+		
+		JLabel lblNome = new JLabel("Nome");
+		lblNome.setBounds(185, 11, 46, 14);
+		panel_Dados_Pessoais.add(lblNome);
+		
+		JFormattedTextField ftf_Nome = new JFormattedTextField();
+		ftf_Nome.setBounds(241, 8, 281, 20);
+		panel_Dados_Pessoais.add(ftf_Nome);
+		
+		JLabel lblDt_Nascmento = new JLabel("Data de Nascimento");
+		lblDt_Nascmento.setBounds(10, 52, 103, 14);
+		panel_Dados_Pessoais.add(lblDt_Nascmento);
+		
+		JLabel lblCpf = new JLabel("CPF");
+		lblCpf.setBounds(257, 52, 46, 14);
+		panel_Dados_Pessoais.add(lblCpf);
+		
+		JFormattedTextField ftf_Cpf = new JFormattedTextField();
+		ftf_Cpf.setBounds(293, 49, 229, 20);
+		panel_Dados_Pessoais.add(ftf_Cpf);
+		
+		JLabel lblEmail = new JLabel("Email");
+		lblEmail.setBounds(10, 98, 46, 14);
+		panel_Dados_Pessoais.add(lblEmail);
+		
+		JFormattedTextField ftf_Email = new JFormattedTextField();
+		ftf_Email.setBounds(48, 95, 474, 20);
+		panel_Dados_Pessoais.add(ftf_Email);
+		
+		JLabel lblEndereco = new JLabel("End.");
+		lblEndereco.setBounds(10, 135, 46, 14);
+		panel_Dados_Pessoais.add(lblEndereco);
+		
+		JFormattedTextField ftf_Endereco = new JFormattedTextField();
+		ftf_Endereco.setBounds(48, 132, 474, 20);
+		panel_Dados_Pessoais.add(ftf_Endereco);
+		
+		JLabel lblMunicipio = new JLabel("Município");
+		lblMunicipio.setBounds(10, 171, 46, 14);
+		panel_Dados_Pessoais.add(lblMunicipio);
+		
+		JFormattedTextField ftf_Municipio = new JFormattedTextField();
+		ftf_Municipio.setBounds(71, 168, 121, 20);
+		panel_Dados_Pessoais.add(ftf_Municipio);
+		
+		JLabel lblUf = new JLabel("UF");
+		lblUf.setBounds(202, 171, 46, 14);
+		panel_Dados_Pessoais.add(lblUf);
+		
+		JLabel lblCelular = new JLabel("Celular");
+		lblCelular.setBounds(278, 171, 46, 14);
+		panel_Dados_Pessoais.add(lblCelular);
+		
+		JFormattedTextField ftf_Celular = new JFormattedTextField();
+		ftf_Celular.setBounds(317, 168, 205, 20);
+		panel_Dados_Pessoais.add(ftf_Celular);
+		//==================== FIM MENU DADOS PESSOAIS
+		
+		//==================== INICIO MENU CURSO
+		JPanel panel_Curso = new JPanel();
+		tabbedPane.addTab("Curso", null, panel_Curso, null);
+		//==================== FIM MENU CURSO
+		
+		//==================== INICIO MENU NOTAS E FALTAS
+		JPanel panel_Notas_Faltas = new JPanel();
+		tabbedPane.addTab("Notas e Faltas", null, panel_Notas_Faltas, null);
+		//==================== FIM MENU NOTAS E FALTAS
+		
+		//==================== INICIO MENU BOLETIM
+		JPanel panel_Boletim = new JPanel();
+		tabbedPane.addTab("Boletim", null, panel_Boletim, null);
+		//==================== FIM MENU BOLETIM
+		//======================== FIM CONTENTPANE
+
+	}
+}

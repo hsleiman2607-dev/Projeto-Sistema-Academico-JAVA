@@ -1,0 +1,97 @@
+package sistemaAcademico;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
+import java.awt.event.KeyEvent;
+import java.awt.event.InputEvent;
+import javax.swing.JSeparator;
+
+public class Gui extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Gui frame = new Gui();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Gui() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 573, 470);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu mnAluno = new JMenu("Aluno");
+		menuBar.add(mnAluno);
+		
+		JMenuItem mntmSalvar_Aluno = new JMenuItem("Salvar");
+		mntmSalvar_Aluno.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
+		mnAluno.add(mntmSalvar_Aluno);
+		
+		JMenuItem mntmAlterar_Aluno = new JMenuItem("Alterar");
+		mnAluno.add(mntmAlterar_Aluno);
+		
+		JMenuItem mntmConsultar_Aluno = new JMenuItem("Consultar");
+		mnAluno.add(mntmConsultar_Aluno);
+		
+		JMenuItem mntmExcluir_Aluno = new JMenuItem("Excluir");
+		mnAluno.add(mntmExcluir_Aluno);
+		
+		JSeparator separator = new JSeparator();
+		mnAluno.add(separator);
+		
+		JMenuItem mntmSair_Aluno = new JMenuItem("Sair");
+		mntmSair_Aluno.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.SHIFT_DOWN_MASK));
+		mnAluno.add(mntmSair_Aluno);
+		
+		JMenu mnNotasFaltas = new JMenu("Notas e Faltas");
+		menuBar.add(mnNotasFaltas);
+		
+		JMenuItem mntmSalvar_Nf = new JMenuItem("Salvar");
+		mnNotasFaltas.add(mntmSalvar_Nf);
+		
+		JMenuItem mntmAlterar_Nf = new JMenuItem("Alterar");
+		mntmAlterar_Nf.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_DOWN_MASK));
+		mnNotasFaltas.add(mntmAlterar_Nf);
+		
+		JMenuItem mntmExcluir_Nf = new JMenuItem("Excluir");
+		mnNotasFaltas.add(mntmExcluir_Nf);
+		
+		JMenuItem mntmConsultar_Nf = new JMenuItem("Consultar");
+		mnNotasFaltas.add(mntmConsultar_Nf);
+		
+		JMenu mnAjuda = new JMenu("Ajuda");
+		menuBar.add(mnAjuda);
+		
+		JMenuItem mntmSobre_Ajuda = new JMenuItem("Sobre");
+		mnAjuda.add(mntmSobre_Ajuda);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+
+	}
+
+}
