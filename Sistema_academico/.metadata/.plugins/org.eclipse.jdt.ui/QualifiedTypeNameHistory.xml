@@ -2,4 +2,10 @@
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="java.lang.Exception"/>
     <fullyQualifiedTypeName name="javax.swing.text.MaskFormatter"/>
+    <fullyQualifiedTypeName name="java.sql.DriverManager"/>
+    <fullyQualifiedTypeName name="com.sun.jdi.connect.spi.Connection"/>
+    <fullyQualifiedTypeName name="java.sql.Connection"/>
+    <fullyQualifiedTypeName name="view.main"/>
+    <fullyQualifiedTypeName name="util.ConnectionFactory"/>
+    <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
 </qualifiedTypeNameHistroy>

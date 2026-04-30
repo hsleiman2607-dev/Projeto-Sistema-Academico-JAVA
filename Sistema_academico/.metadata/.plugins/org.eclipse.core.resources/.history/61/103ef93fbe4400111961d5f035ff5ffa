@@ -1,0 +1,400 @@
+package sistemaAcademico;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
+import java.awt.event.KeyEvent;
+import java.awt.event.InputEvent;
+import javax.swing.JSeparator;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JTabbedPane;
+import javax.swing.JLabel;
+import javax.swing.JFormattedTextField;
+import javax.swing.JComboBox;
+import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JRadioButton;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+
+public class Gui extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField tf_Resultado_Busca_Nome;
+	private JTextField tf_Resultado_Busca_Curso;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Gui frame = new Gui();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	//============================================================================= INICIO DO FRAME =====================================================================
+	// throws Exception serve para garantir que nao tenha erros no MaskFormatter
+	public Gui() throws Exception {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 573, 379);
+		//Margem que guarda o menu superior
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu mnAluno = new JMenu("Aluno");
+		menuBar.add(mnAluno);
+		
+		JMenuItem mntmSalvar_Aluno = new JMenuItem("Salvar");
+		mntmSalvar_Aluno.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
+		mnAluno.add(mntmSalvar_Aluno);
+		
+		JMenuItem mntmAlterar_Aluno = new JMenuItem("Alterar");
+		mnAluno.add(mntmAlterar_Aluno);
+		
+		JMenuItem mntmConsultar_Aluno = new JMenuItem("Consultar");
+		mnAluno.add(mntmConsultar_Aluno);
+		
+		JMenuItem mntmExcluir_Aluno = new JMenuItem("Excluir");
+		mnAluno.add(mntmExcluir_Aluno);
+		
+		JSeparator separator = new JSeparator();
+		mnAluno.add(separator);
+		
+		//Botao para sair que esta dentro do menu superior Aluno
+		JMenuItem mntmSair_Aluno = new JMenuItem("Sair");
+		mntmSair_Aluno.addActionListener(new ActionListener() {
+			//Metodo para fechar o aplicativo
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		mntmSair_Aluno.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.SHIFT_DOWN_MASK));
+		mnAluno.add(mntmSair_Aluno);
+		
+		JMenu mnNotasFaltas = new JMenu("Notas e Faltas");
+		menuBar.add(mnNotasFaltas);
+		
+		JMenuItem mntmSalvar_Nf = new JMenuItem("Salvar");
+		mnNotasFaltas.add(mntmSalvar_Nf);
+		
+		JMenuItem mntmAlterar_Nf = new JMenuItem("Alterar");
+		mntmAlterar_Nf.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_DOWN_MASK));
+		mnNotasFaltas.add(mntmAlterar_Nf);
+		
+		JMenuItem mntmExcluir_Nf = new JMenuItem("Excluir");
+		mnNotasFaltas.add(mntmExcluir_Nf);
+		
+		JMenuItem mntmConsultar_Nf = new JMenuItem("Consultar");
+		mnNotasFaltas.add(mntmConsultar_Nf);
+		//Menu Ajuda
+		JMenu mnAjuda = new JMenu("Ajuda");
+		menuBar.add(mnAjuda);
+		//Botao Sobre no menu Ajuda
+		JMenuItem mntmSobre_Ajuda = new JMenuItem("Sobre");
+		mntmSobre_Ajuda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//====================
+				//Comando para mostrar mensagem em uma nova janela ao apertar o botao
+				JOptionPane.showMessageDialog(null,"informações do Menu");
+				
+				//====================
+			}
+		});
+		mnAjuda.add(mntmSobre_Ajuda);
+		//====================== INICIO CONTENTPANE ==========================
+		//Area de delimitacao do conteudo principal da janela
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		//======================= INICIO TABBEDPANE ==========================
+		// Area de delimitacao do menu interno do sistema
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBounds(10, 63, 537, 244);
+		//======================= FIM TABBEDPANE ==========================
+		contentPane.add(tabbedPane);
+		
+		//==================== INICIO MENU DADOS PESSOAIS ==========================
+		/*
+		 * lbl == LABEL
+		 * ftf == FormattedTextField
+		 * cb == COMBO BOX
+		 * 
+		 *==================== */
+		
+		JPanel panel_Dados_Pessoais = new JPanel();
+		tabbedPane.addTab("Dados Pessoais", null, panel_Dados_Pessoais, null);
+		panel_Dados_Pessoais.setLayout(null);
+		
+		JLabel lblRgm = new JLabel("RGM");
+		lblRgm.setBounds(10, 11, 46, 14);
+		panel_Dados_Pessoais.add(lblRgm);
+		
+		JFormattedTextField ftf_Rgm = new JFormattedTextField();
+		ftf_Rgm.setBounds(48, 8, 103, 20);
+		panel_Dados_Pessoais.add(ftf_Rgm);
+		
+		
+		JLabel lblNome = new JLabel("Nome");
+		lblNome.setBounds(185, 11, 46, 14);
+		panel_Dados_Pessoais.add(lblNome);
+		
+		JFormattedTextField ftf_Nome = new JFormattedTextField();
+		ftf_Nome.setBounds(241, 8, 281, 20);
+		panel_Dados_Pessoais.add(ftf_Nome);
+		
+		JLabel lblDt_Nascmento = new JLabel("Data de Nascimento");
+		lblDt_Nascmento.setBounds(10, 52, 103, 14);
+		panel_Dados_Pessoais.add(lblDt_Nascmento);
+		
+		JLabel lblCpf = new JLabel("CPF");
+		lblCpf.setBounds(257, 52, 46, 14);
+		panel_Dados_Pessoais.add(lblCpf);
+		
+		JFormattedTextField ftf_Cpf = new JFormattedTextField(new MaskFormatter("###.###.###-#"));
+		ftf_Cpf.setBounds(293, 49, 229, 20);
+		panel_Dados_Pessoais.add(ftf_Cpf);
+		
+		JLabel lblEmail = new JLabel("Email");
+		lblEmail.setBounds(10, 98, 46, 14);
+		panel_Dados_Pessoais.add(lblEmail);
+		
+		JFormattedTextField ftf_Email = new JFormattedTextField();
+		ftf_Email.setBounds(48, 95, 474, 20);
+		panel_Dados_Pessoais.add(ftf_Email);
+		
+		JLabel lblEndereco = new JLabel("End.");
+		lblEndereco.setBounds(10, 135, 46, 14);
+		panel_Dados_Pessoais.add(lblEndereco);
+		
+		JFormattedTextField ftf_Endereco = new JFormattedTextField();
+		ftf_Endereco.setBounds(48, 132, 474, 20);
+		panel_Dados_Pessoais.add(ftf_Endereco);
+		
+		JLabel lblMunicipio = new JLabel("Município");
+		lblMunicipio.setBounds(10, 171, 59, 14);
+		panel_Dados_Pessoais.add(lblMunicipio);
+		
+		JFormattedTextField ftf_Municipio = new JFormattedTextField();
+		ftf_Municipio.setBounds(72, 168, 120, 20);
+		panel_Dados_Pessoais.add(ftf_Municipio);
+		
+		JLabel lblUf = new JLabel("UF");
+		lblUf.setBounds(202, 171, 46, 14);
+		panel_Dados_Pessoais.add(lblUf);
+		
+		JLabel lblCelular = new JLabel("Celular");
+		lblCelular.setBounds(278, 171, 46, 14);
+		panel_Dados_Pessoais.add(lblCelular);
+		
+		JFormattedTextField ftf_Celular = new JFormattedTextField(new MaskFormatter("(##)#####-####"));
+		ftf_Celular.setBounds(330, 168, 192, 20);
+		panel_Dados_Pessoais.add(ftf_Celular);
+		
+		JComboBox cb_Uf = new JComboBox();
+		cb_Uf.setModel(new DefaultComboBoxModel(new String[] {"AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"}));
+		cb_Uf.setBounds(222, 167, 46, 22);
+		panel_Dados_Pessoais.add(cb_Uf);
+		// new MaskFormatter serve para formatar o campo
+		JFormattedTextField ftf_Dt_Nasc = new JFormattedTextField(new MaskFormatter("##/##/####"));
+		ftf_Dt_Nasc.setBounds(113, 49, 118, 20);
+		panel_Dados_Pessoais.add(ftf_Dt_Nasc);
+		//==================== FIM MENU DADOS PESSOAIS ==========================
+		
+		//==================== INICIO MENU CURSO ==========================
+		/*
+		 * lbl == LABEL
+		 * cb == COMBO BOX
+		 * rdbtn == RADIO BUTTON
+		 * btn == BUTTOM
+		 * 
+		 *==================== */
+		JPanel panel_Curso = new JPanel();
+		tabbedPane.addTab("Curso", null, panel_Curso, null);
+		panel_Curso.setLayout(null);
+		
+		JLabel lblCurso = new JLabel("Curso");
+		lblCurso.setBounds(10, 11, 46, 14);
+		panel_Curso.add(lblCurso);
+		
+		JComboBox cb_Curso = new JComboBox();
+		cb_Curso.setModel(new DefaultComboBoxModel(new String[] {"Analise e desenvolvimento de sistemas", "Ciencia da computação"}));
+		cb_Curso.setBounds(63, 7, 459, 22);
+		panel_Curso.add(cb_Curso);
+		
+		JLabel lblCampus = new JLabel("Campus");
+		lblCampus.setBounds(10, 42, 46, 14);
+		panel_Curso.add(lblCampus);
+		
+		JComboBox cb_Campus = new JComboBox();
+		cb_Campus.setModel(new DefaultComboBoxModel(new String[] {"Tatuape", "Pinheiros/Villa-Lobos", "EAD"}));
+		cb_Campus.setBounds(63, 40, 459, 22);
+		panel_Curso.add(cb_Campus);
+		
+		JLabel lblNewLabel = new JLabel("Período");
+		lblNewLabel.setBounds(10, 88, 46, 14);
+		panel_Curso.add(lblNewLabel);
+		
+		
+		JRadioButton rdbtn_Matutino = new JRadioButton("Matutino");
+		rdbtn_Matutino.setBounds(65, 84, 93, 23);
+		panel_Curso.add(rdbtn_Matutino);
+		
+		JRadioButton rdbtn_Vespertino = new JRadioButton("Vespertino");
+		rdbtn_Vespertino.setBounds(160, 84, 109, 23);
+		panel_Curso.add(rdbtn_Vespertino);
+		
+		JRadioButton rdbtn_Noturno = new JRadioButton("Noturno");
+		rdbtn_Noturno.setBounds(267, 84, 109, 23);
+		panel_Curso.add(rdbtn_Noturno);
+		
+		//Criação do objeto PERIODO, que tem a função de fazer com que todos os RadioButtons façam parte do mesmo grupo.
+		ButtonGroup periodo = new ButtonGroup();
+		//.ADD adiciona todos no mesmo grupo
+		periodo.add(rdbtn_Matutino);
+		periodo.add(rdbtn_Vespertino);
+		periodo.add(rdbtn_Noturno);
+		
+		//---------------------------- BOTOES QUE NAO SABEMOS OQ FAZER ----------------------------------
+		
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.setBounds(10, 126, 71, 66);
+		panel_Curso.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("New button");
+		btnNewButton_1.setBounds(116, 126, 71, 66);
+		panel_Curso.add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("New button");
+		btnNewButton_2.setBounds(236, 126, 71, 66);
+		panel_Curso.add(btnNewButton_2);
+		
+		JButton btnNewButton_3 = new JButton("New button");
+		btnNewButton_3.setBounds(346, 126, 71, 66);
+		panel_Curso.add(btnNewButton_3);
+		
+		JButton btnNewButton_4 = new JButton("New button");
+		btnNewButton_4.setBounds(451, 126, 71, 66);
+		panel_Curso.add(btnNewButton_4);
+		
+		
+		//==================== FIM MENU CURSO ==========================
+		
+		//==================== INICIO MENU NOTAS E FALTAS ==========================
+		/*
+		 * lbl == LABEL
+		 * cb == COMBO BOX
+		 * rdbtn == RADIO BUTTON
+		 * tf == TEXT FIELD
+		 * btn == BUTTOM
+		 * 
+		 *==================== */
+		JPanel panel_Notas_Faltas = new JPanel();
+		tabbedPane.addTab("Notas e Faltas", null, panel_Notas_Faltas, null);
+		panel_Notas_Faltas.setLayout(null);
+		
+		JLabel lblRGM = new JLabel("RGM");
+		lblRGM.setBounds(10, 11, 46, 14);
+		panel_Notas_Faltas.add(lblRGM);
+		
+		JFormattedTextField ftf_Rgm_pesquisa = new JFormattedTextField();
+		ftf_Rgm_pesquisa.setBounds(53, 8, 116, 20);
+		panel_Notas_Faltas.add(ftf_Rgm_pesquisa);
+		
+		tf_Resultado_Busca_Nome = new JTextField();
+		tf_Resultado_Busca_Nome.setBounds(179, 8, 343, 20);
+		panel_Notas_Faltas.add(tf_Resultado_Busca_Nome);
+		tf_Resultado_Busca_Nome.setColumns(10);
+		//setEditable(false) serve para deixar o campo impossivel de adicionar texto
+		tf_Resultado_Busca_Nome.setEditable(false);
+		
+		tf_Resultado_Busca_Curso = new JTextField();
+		tf_Resultado_Busca_Curso.setBounds(10, 37, 512, 20);
+		panel_Notas_Faltas.add(tf_Resultado_Busca_Curso);
+		tf_Resultado_Busca_Curso.setColumns(10);
+		tf_Resultado_Busca_Curso.setEditable(false);
+		
+		JLabel lblDisciplina = new JLabel("Disciplina");
+		lblDisciplina.setBounds(10, 73, 64, 14);
+		panel_Notas_Faltas.add(lblDisciplina);
+		
+		JComboBox cb_Disciplina = new JComboBox();
+		cb_Disciplina.setModel(new DefaultComboBoxModel(new String[] {"Programação Orientada a Objeto", "Banco de dados", "Programação WEB"}));
+		cb_Disciplina.setBounds(72, 69, 450, 22);
+		panel_Notas_Faltas.add(cb_Disciplina);
+		
+		JLabel lblSemestre = new JLabel("Semestre");
+		lblSemestre.setBounds(10, 105, 64, 14);
+		panel_Notas_Faltas.add(lblSemestre);
+		
+		JComboBox cb_Semestre = new JComboBox();
+		cb_Semestre.setModel(new DefaultComboBoxModel(new String[] {"2025-1", "2025-2", "2026-1", "2026-2"}));
+		cb_Semestre.setBounds(72, 101, 64, 22);
+		panel_Notas_Faltas.add(cb_Semestre);
+		
+		JLabel lblNota = new JLabel("Nota");
+		lblNota.setBounds(146, 105, 46, 14);
+		panel_Notas_Faltas.add(lblNota);
+		
+		JComboBox cb_Nota = new JComboBox();
+		cb_Nota.setModel(new DefaultComboBoxModel(new String[] {"0", "0,5", "1", "1,5", "2", "2,5", "3", "3,5", "4", "4,5", "5", "5,5", "6", "6,5", "7", "7,5", "8", "8,5", "9", "9,5", "10"}));
+		cb_Nota.setBounds(179, 102, 46, 22);
+		panel_Notas_Faltas.add(cb_Nota);
+		
+		JLabel lblFaltas = new JLabel("Faltas");
+		lblFaltas.setBounds(235, 106, 46, 14);
+		panel_Notas_Faltas.add(lblFaltas);
+		
+		JFormattedTextField ftf_Faltas = new JFormattedTextField();
+		ftf_Faltas.setBounds(277, 102, 81, 20);
+		panel_Notas_Faltas.add(ftf_Faltas);
+		
+		JButton btnNewButton_5 = new JButton("New button");
+		btnNewButton_5.setBounds(10, 137, 71, 66);
+		panel_Notas_Faltas.add(btnNewButton_5);
+		
+		JButton btnNewButton_1_1 = new JButton("New button");
+		btnNewButton_1_1.setBounds(116, 137, 71, 66);
+		panel_Notas_Faltas.add(btnNewButton_1_1);
+		
+		JButton btnNewButton_2_1 = new JButton("New button");
+		btnNewButton_2_1.setBounds(236, 137, 71, 66);
+		panel_Notas_Faltas.add(btnNewButton_2_1);
+		
+		JButton btnNewButton_3_1 = new JButton("New button");
+		btnNewButton_3_1.setBounds(346, 137, 71, 66);
+		panel_Notas_Faltas.add(btnNewButton_3_1);
+		
+		JButton btnNewButton_4_1 = new JButton("New button");
+		btnNewButton_4_1.setBounds(451, 137, 71, 66);
+		panel_Notas_Faltas.add(btnNewButton_4_1);
+		//==================== FIM MENU NOTAS E FALTAS ==========================
+		
+		//==================== INICIO MENU BOLETIM ==========================
+		JPanel panel_Boletim = new JPanel();
+		tabbedPane.addTab("Boletim", null, panel_Boletim, null);
+		//==================== FIM MENU BOLETIM ==========================
+		//======================== FIM CONTENTPANE ==========================
+
+	}	//============================================================================= FIM DO FRAME =====================================================================
+}

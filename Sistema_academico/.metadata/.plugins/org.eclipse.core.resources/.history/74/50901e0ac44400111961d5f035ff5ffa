@@ -1,0 +1,15 @@
+package model;
+
+public class Aluno {
+	//Atributos
+	private String rgm;
+	private String cpf;
+	private String nome;
+	private String data_nasc;
+	private String email;
+	private String numero;
+	private String endereco;
+	private String complemento;
+	private String municipio;
+	private String uf;
+}

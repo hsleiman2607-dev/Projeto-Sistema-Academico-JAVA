@@ -1,3 +1,2 @@
-2026/04/26-10:49:45.501 2d28 Reusing MANIFEST C:\Users\Pichau\Desktop\Sistema_academico\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Local Storage\leveldb/MANIFEST-000001
-2026/04/26-10:49:45.508 2d28 Recovering log #3
-2026/04/26-10:49:45.510 2d28 Reusing old log C:\Users\Pichau\Desktop\Sistema_academico\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Local Storage\leveldb/000003.log 
+2026/04/30-13:53:09.550 2858 Creating DB C:\Users\Pichau\Documents\Projeto-Sistema-Academico-JAVA\Sistema_academico\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Local Storage\leveldb since it was missing.
+2026/04/30-13:53:09.580 2858 Reusing MANIFEST C:\Users\Pichau\Documents\Projeto-Sistema-Academico-JAVA\Sistema_academico\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Local Storage\leveldb/MANIFEST-000001

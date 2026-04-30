@@ -1,0 +1,24 @@
+package util;
+
+import java.sql.DriverManager;
+
+import javax.swing.JOptionPane;
+
+public class ConnectionFactory {
+	public static Connection getConnection() throws Exception{
+		/*O método getConnection nao irá tratar erros ( throws exception)*/
+		
+		/*Toda classe de banco de dados deve ficar dentro de um try catch para fazer os tratamentos de erros*/
+		try {
+			/*O Class.forName está indicando que vai utilizar o DB SQL e aponta ao Driver*/
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			/*Conexao com o DataBase*/
+			String login = "root";
+			String senha = "";
+			String url = "jdbc:mysql://localhost:3306/dbsistemaescolar";
+			return DriverManager.getConnection(url,login,senha);
+			JOptionPane.showMessageDialog(null, "DB conectado");
+		}
+	}
+}
