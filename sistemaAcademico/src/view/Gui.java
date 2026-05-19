@@ -267,25 +267,7 @@ public class Gui extends JFrame {
 		periodo.add(rdbtn_Vespertino);
 		periodo.add(rdbtn_Noturno);
 
-		JButton btnCursoSalvar = new JButton("");
-		btnCursoSalvar.setIcon(new ImageIcon("C:\\Users\\Pichau\\Documents\\Projeto-Sistema-Academico-JAVA\\sistemaAcademico\\img\\salvar.png"));
-		btnCursoSalvar.setBounds(10, 126, 93, 66);
-		panel_Curso.add(btnCursoSalvar);
 
-		JButton btnCursoAlterar = new JButton("");
-		btnCursoAlterar.setIcon(new ImageIcon("C:\\Users\\Pichau\\Documents\\Projeto-Sistema-Academico-JAVA\\sistemaAcademico\\img\\alterar.png"));
-		btnCursoAlterar.setBounds(138, 126, 93, 66);
-		panel_Curso.add(btnCursoAlterar);
-
-		JButton btnCursoConsultar = new JButton("");
-		btnCursoConsultar.setIcon(new ImageIcon("C:\\Users\\Pichau\\Documents\\Projeto-Sistema-Academico-JAVA\\sistemaAcademico\\img\\consultar.png"));
-		btnCursoConsultar.setBounds(298, 126, 89, 66);
-		panel_Curso.add(btnCursoConsultar);
-
-		JButton btnCursoExcluir = new JButton("");
-		btnCursoExcluir.setIcon(new ImageIcon("C:\\Users\\Pichau\\Documents\\Projeto-Sistema-Academico-JAVA\\sistemaAcademico\\img\\excluir.png"));
-		btnCursoExcluir.setBounds(433, 126, 89, 66);
-		panel_Curso.add(btnCursoExcluir);
 
 		// ===================== ABA NOTAS E FALTAS =====================
 		// Nesta aba ficam o cadastro, alteração, consulta e exclusão das notas
@@ -348,25 +330,6 @@ public class Gui extends JFrame {
 		ftf_Faltas.setBounds(277, 102, 81, 20);
 		panel_Notas_Faltas.add(ftf_Faltas);
 
-		JButton btnNfSalvar = new JButton("");
-		btnNfSalvar.setIcon(new ImageIcon("C:\\Users\\Pichau\\Documents\\Projeto-Sistema-Academico-JAVA\\sistemaAcademico\\img\\salvar.png"));
-		btnNfSalvar.setBounds(10, 139, 93, 66);
-		panel_Notas_Faltas.add(btnNfSalvar);
-
-		JButton btnNfAlterar = new JButton("");
-		btnNfAlterar.setIcon(new ImageIcon("C:\\Users\\Pichau\\Documents\\Projeto-Sistema-Academico-JAVA\\sistemaAcademico\\img\\alterar.png"));
-		btnNfAlterar.setBounds(138, 139, 93, 66);
-		panel_Notas_Faltas.add(btnNfAlterar);
-
-		JButton btnNfConsultar = new JButton("");
-		btnNfConsultar.setIcon(new ImageIcon("C:\\Users\\Pichau\\Documents\\Projeto-Sistema-Academico-JAVA\\sistemaAcademico\\img\\consultar.png"));
-		btnNfConsultar.setBounds(298, 139, 89, 66);
-		panel_Notas_Faltas.add(btnNfConsultar);
-
-		JButton btnNfExcluir = new JButton("");
-		btnNfExcluir.setIcon(new ImageIcon("C:\\Users\\Pichau\\Documents\\Projeto-Sistema-Academico-JAVA\\sistemaAcademico\\img\\excluir.png"));
-		btnNfExcluir.setBounds(433, 139, 89, 66);
-		panel_Notas_Faltas.add(btnNfExcluir);
 
 		// ===================== ABA BOLETIM =====================
 		// Nesta aba o boletim é montado a partir do RGM e do semestre escolhido
@@ -391,6 +354,7 @@ public class Gui extends JFrame {
 		tf_RgmBoletim = new JFormattedTextField(new MaskFormatter("########"));
 		tf_RgmBoletim.setBounds(50, 8, 123, 20);
 		panel_Boletim.add(tf_RgmBoletim);
+
 
 		JLabel lblCursoBoletim = new JLabel("Curso");
 		lblCursoBoletim.setBounds(10, 39, 46, 14);
@@ -563,12 +527,6 @@ public class Gui extends JFrame {
 			}
 		});
 
-		btnCursoSalvar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// Reaproveita a mesma ação do menu Salvar Aluno e Curso
-				mntmSalvar_Aluno_Curso.doClick();
-			}
-		});
 
 
 		// ===================== INÍCIO: ALTERAR ALUNO E CURSO =====================
@@ -627,12 +585,6 @@ public class Gui extends JFrame {
 					JOptionPane.showMessageDialog(null, "ERRO: " + e1.getMessage());
 					e1.printStackTrace();
 				}
-			}
-		});
-
-		btnCursoAlterar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mntmAlterar_Aluno.doClick();
 			}
 		});
 
@@ -704,11 +656,6 @@ public class Gui extends JFrame {
 			}
 		});
 
-		btnCursoConsultar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mntmConsultar_Aluno.doClick();
-			}
-		});
 
 
 		// ===================== INÍCIO: EXCLUIR ALUNO =====================
@@ -757,11 +704,6 @@ public class Gui extends JFrame {
 			}
 		});
 
-		btnCursoExcluir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mntmExcluir_Aluno.doClick();
-			}
-		});
 
 		// ===================== INÍCIO: SALVAR NOTA =====================
 		// Salva uma nota/falta para o aluno, disciplina e semestre selecionados
@@ -789,11 +731,6 @@ public class Gui extends JFrame {
 			}
 		});
 
-		btnNfSalvar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mntmSalvar_Nf.doClick();
-			}
-		});
 
 
 		// ===================== INÍCIO: ALTERAR NOTA =====================
@@ -822,11 +759,6 @@ public class Gui extends JFrame {
 			}
 		});
 
-		btnNfAlterar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mntmAlterar_Nf.doClick();
-			}
-		});
 
 
 		// ===================== INÍCIO: CONSULTAR NOTA =====================
@@ -882,11 +814,6 @@ public class Gui extends JFrame {
 			}
 		});
 
-		btnNfConsultar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mntmConsultar_Nf.doClick();
-			}
-		});
 
 		// ===================== INÍCIO: EXCLUIR NOTA =====================
 		// Exclui somente a nota da disciplina e semestre selecionados
@@ -924,11 +851,6 @@ public class Gui extends JFrame {
 			}
 		});
 
-		btnNfExcluir.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mntmExcluir_Nf.doClick();
-			}
-		});
 
 
 		// ===================== INÍCIO: CONSULTAR BOLETIM =====================
