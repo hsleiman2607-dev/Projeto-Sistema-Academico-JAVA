@@ -57,6 +57,7 @@ public class LeitorDAO {
 			String sqlCurso = "INSERT INTO tb_curso(curso, campus, periodo, fk_rgm) "
 					+ "VALUES(?, ?, ?, ?)";
 
+			// Prepara o comando do curso depois que o aluno já foi salvo
 			ps = conn.prepareStatement(sqlCurso);
 
 			ps.setString(1, curso.getCurso());
@@ -125,6 +126,7 @@ public class LeitorDAO {
 			String sqlNota = "INSERT INTO tb_notas(disciplina, semestre, nota, faltas, fk_rgm) "
 					+ "VALUES(?, ?, ?, ?, ?)";
 
+			// Prepara o comando SQL da tabela de notas
 			ps = conn.prepareStatement(sqlNota);
 
 			ps.setString(1, nota.getDisciplina());
@@ -148,7 +150,7 @@ public class LeitorDAO {
 	public void alterarNota(Nota nota) throws Exception {
 		try {
 			String sqlNota = "UPDATE tb_notas SET nota = ?, faltas = ? "
-					+ "WHERE fk_rgm = ? AND disciplina = ? AND semestre = ?";
+					+ "WHERE fk_rgm = ? AND disciplina = ? AND semestre = ?"; // garante que só uma nota específica seja afetada
 
 			ps = conn.prepareStatement(sqlNota);
 
@@ -185,6 +187,7 @@ public class LeitorDAO {
 			rs = ps.executeQuery();
 
 			// Se rs.next() for verdadeiro, significa que encontrou um aluno com esse RGM
+			// rs.next() tenta ir para o primeiro resultado encontrado no SELECT
 			if (rs.next()) {
 				// Monta o objeto Aluno com os dados que vieram do banco
 				Aluno aluno = new Aluno(
@@ -223,6 +226,7 @@ public class LeitorDAO {
 	// Consulta uma nota específica. Aqui não basta só o RGM, porque o aluno pode ter várias disciplinas.
 	public Nota consultarNota(String rgm, String disciplina, String semestre) throws Exception {
 		try {
+			// SELECT usado para buscar todas as disciplinas/notas que pertencem ao RGM informado
 			String sql = "SELECT id_nota, disciplina, semestre, nota, faltas, fk_rgm "
 					+ "FROM tb_notas "
 					+ "WHERE fk_rgm = ? AND disciplina = ? AND semestre = ?";
@@ -237,6 +241,7 @@ public class LeitorDAO {
 
 			// Se encontrou a combinação RGM + disciplina + semestre, cria o objeto Nota
 			if (rs.next()) {
+				// Cria um objeto Nota para guardar os dados encontrados no ResultSet
 				Nota nota = new Nota();
 
 				nota.setIdNota(rs.getInt("id_nota"));
@@ -304,7 +309,7 @@ public class LeitorDAO {
 	// ===================== FIM: EXCLUIR NOTA =====================
 
 	// ===================== INÍCIO: CONSULTAR NOTAS POR SEMESTRE =====================
-	// Usado no boletim para trazer todas as notas do aluno em um semestre.
+	// Mantido para consultas que ainda precisem filtrar as notas por semestre.
 	public List<Nota> consultarNotasPorSemestre(String rgm, String semestre) throws Exception {
 		// Lista que vai guardar todas as notas encontradas no SELECT
 		List<Nota> lista = new ArrayList<Nota>();
@@ -322,6 +327,8 @@ public class LeitorDAO {
 			rs = ps.executeQuery();
 
 			// O while é usado porque podem existir várias notas no mesmo semestre
+			// O while percorre todos os registros encontrados, pois o aluno pode ter várias disciplinas
+			// Enquanto houver registros no ResultSet, o laço continua montando objetos Nota
 			while (rs.next()) {
 				Nota nota = new Nota();
 
@@ -333,6 +340,8 @@ public class LeitorDAO {
 				nota.setRgm(rs.getString("fk_rgm"));
 
 				// Cada nota encontrada é adicionada na lista para depois aparecer no boletim
+				// Adiciona cada nota encontrada na lista que será devolvida para a tela
+				// Adiciona a nota montada na lista que será retornada para a tela
 				lista.add(nota);
 			}
 
@@ -346,21 +355,23 @@ public class LeitorDAO {
 
 
 	// ===================== INÍCIO: CONSULTAR NOTAS DO BOLETIM =====================
-	// Usado no boletim para trazer todas as notas cadastradas do aluno, sem filtrar por semestre.
+	// Usado no boletim novo para trazer todas as notas do aluno apenas pelo RGM.
 	public List<Nota> consultarNotasBoletim(String rgm) throws Exception {
 		List<Nota> lista = new ArrayList<Nota>();
 
 		try {
+			// SELECT usado para buscar todas as disciplinas/notas que pertencem ao RGM informado
 			String sql = "SELECT id_nota, disciplina, semestre, nota, faltas, fk_rgm "
 					+ "FROM tb_notas "
 					+ "WHERE fk_rgm = ? "
-					+ "ORDER BY semestre, disciplina";
+					+ "ORDER BY semestre, disciplina"; // ordena o boletim para ficar mais organizado // organiza o resultado por semestre e disciplina
 
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, rgm);
 
 			rs = ps.executeQuery();
 
+			// O while percorre todos os registros encontrados, pois o aluno pode ter várias disciplinas
 			while (rs.next()) {
 				Nota nota = new Nota();
 
@@ -371,6 +382,7 @@ public class LeitorDAO {
 				nota.setFaltas(rs.getInt("faltas"));
 				nota.setRgm(rs.getString("fk_rgm"));
 
+				// Adiciona cada nota encontrada na lista que será devolvida para a tela
 				lista.add(nota);
 			}
 

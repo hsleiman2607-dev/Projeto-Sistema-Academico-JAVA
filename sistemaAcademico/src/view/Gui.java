@@ -325,7 +325,7 @@ public class Gui extends JFrame {
 		panel_Notas_Faltas.add(ftf_Faltas);
 
 		// ===================== ABA BOLETIM =====================
-		// Nesta aba o boletim é montado a partir do RGM e do semestre escolhido
+		// Nesta aba o boletim é montado a partir do RGM informado
 		JPanel panel_Boletim = new JPanel();
 		tabbedPane.addTab("Boletim", null, panel_Boletim, null);
 		panel_Boletim.setLayout(null);
@@ -365,11 +365,14 @@ public class Gui extends JFrame {
 		btnConsultarBoletim.setBounds(451, 132, 71, 73);
 		panel_Boletim.add(btnConsultarBoletim);
 		
+		// Área com rolagem onde o boletim em texto será exibido
 		JScrollPane spBoletim = new JScrollPane();
 		spBoletim.setBounds(10, 64, 427, 141);
 		panel_Boletim.add(spBoletim);
 		
+		// Campo de texto grande usado para mostrar o boletim gerado
 		JTextArea ta_Boletim = new JTextArea();
+		// O usuário não edita o boletim manualmente; ele só visualiza o resultado da consulta
 		ta_Boletim.setEditable(false);
 		ta_Boletim.setLineWrap(true);
 		ta_Boletim.setWrapStyleWord(true);
@@ -396,7 +399,9 @@ public class Gui extends JFrame {
 					 que é o formato aceito pelo MySQL no campo DATE..
 					 * */
 					String dataTela = ftf_Dt_Nasc.getText();
+					// Divide a data em dia, mês e ano usando a barra como separador
 					String[] partes = dataTela.split("/");
+					// Reorganiza a data para o formato usado pelo banco: ano-mês-dia
 					String dataBanco = partes[2] + "-" + partes[1] + "-" + partes[0];
 					aluno.setData_nasc(dataBanco);
 
@@ -414,9 +419,11 @@ public class Gui extends JFrame {
 					curso.setCampus((String) cb_Campus.getSelectedItem());
 
 					// Variável usada para guardar qual radio button de período foi marcado
+					// Começa vazio e só recebe valor se algum radio button for selecionado
 					String periodoSelecionado = "";
 
 					// Verifica qual período foi escolhido pelo usuário
+					// Testa cada radio button para descobrir qual período o usuário escolheu
 					if (rdbtn_Matutino.isSelected()) {
 						periodoSelecionado = "Matutino";
 					} else if (rdbtn_Vespertino.isSelected()) {
@@ -426,6 +433,7 @@ public class Gui extends JFrame {
 					}
 
 					// Se nenhum período foi selecionado, o cadastro/alteração é interrompido
+					// Se continuar vazio, significa que o usuário não marcou nenhum período
 					if (periodoSelecionado.equals("")) {
 						JOptionPane.showMessageDialog(null, "Selecione um período!");
 						return;
@@ -434,9 +442,10 @@ public class Gui extends JFrame {
 					curso.setPeriodo(periodoSelecionado);
 
 					// Junta Aluno e Curso no mesmo objeto para enviar ao DAO
+					// Como este cadastro ainda não envolve nota, o terceiro valor vai como null
 					alunoCursoNota = new AlunoCursoNota(aluno, curso, null);
 
-					// Cria o DAO para acessar o banco de dados
+					// Cria o objeto responsável por chamar os métodos que conversam com o banco
 					dao = new LeitorDAO();
 					// Envia os dados de aluno e curso para serem salvos no banco
 					dao.salvarAlunoCurso(alunoCursoNota);
@@ -519,10 +528,10 @@ public class Gui extends JFrame {
 					String rgm = ftf_Rgm.getText();
 
 					dao = new LeitorDAO();
-					// Consulta o aluno e o curso usando o RGM informado
+					// O DAO retorna um objeto com aluno e curso juntos, ou null se não encontrar nada
 					alunoCursoNota = dao.consultarAlunoCurso(rgm);
 
-					// Se não encontrou nenhum aluno com esse RGM, limpa/para a ação
+					// Quando vem null, é porque o SELECT não encontrou registro para o RGM informado
 					if (alunoCursoNota == null) {
 						JOptionPane.showMessageDialog(null, "Aluno não encontrado!");
 						return;
@@ -539,6 +548,7 @@ public class Gui extends JFrame {
 					String dataBanco = aluno.getData_nasc();
 
 					// Confere se a data veio no formato esperado antes de separar
+					// Só tenta converter se a data não estiver vazia e estiver no formato esperado do banco
 					if (dataBanco != null && dataBanco.contains("-")) {
 						String[] partes = dataBanco.split("-");
 						String dataTela = partes[2] + "/" + partes[1] + "/" + partes[0];
@@ -587,6 +597,7 @@ public class Gui extends JFrame {
 					String rgm = ftf_Rgm.getText();
 
 					// Antes de excluir, pede confirmação para evitar apagar por acidente
+					// Guarda a resposta do usuário para saber se ele confirmou ou cancelou a exclusão
 					int resposta = JOptionPane.showConfirmDialog(
 							null,
 							"Deseja excluir este aluno, curso e todas as notas dele?",
@@ -595,6 +606,7 @@ public class Gui extends JFrame {
 					);
 
 					// Se o usuário escolher "Não", a exclusão é cancelada
+					// Se a resposta não for SIM, o return encerra a ação antes de apagar qualquer coisa
 					if (resposta != JOptionPane.YES_OPTION) {
 						return;
 					}
@@ -631,12 +643,15 @@ public class Gui extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					// Cria um objeto Nota para guardar disciplina, semestre, nota e faltas
+					// Cria um objeto Nota vazio para receber os dados da aba Notas e Faltas
 					nota = new Nota();
 					
 					nota.setRgm(ftf_Rgm_pesquisa.getText());
 					nota.setDisciplina((String) cb_Disciplina.getSelectedItem());
 					nota.setSemestre((String) cb_Semestre.getSelectedItem());
 					nota.setNota((String) cb_Nota.getSelectedItem());
+					// O campo de faltas vem como texto, então precisa ser convertido para int
+					// Converte novamente para int antes de alterar no banco
 					nota.setFaltas(Integer.parseInt(ftf_Faltas.getText()));
 					
 					dao = new LeitorDAO();
@@ -709,10 +724,11 @@ public class Gui extends JFrame {
 					tf_Resultado_Busca_Curso.setText(curso.getCurso());
 
 					// Depois consulta a nota da disciplina/semestre selecionados
-					// Consulta a nota usando a combinação RGM + disciplina + semestre
+					// Consulta uma nota específica usando a combinação que identifica o registro no banco
 					nota = dao.consultarNota(rgm, disciplina, semestre);
 
 					// Se não houver nota cadastrada para essa combinação, avisa e limpa os campos de nota
+					// Se não existe nota para essa disciplina/semestre, os campos de nota são limpos
 					if (nota == null) {
 						JOptionPane.showMessageDialog(null, "Aluno encontrado, mas não existe nota cadastrada para essa disciplina e semestre.");
 						cb_Nota.setSelectedIndex(0);
@@ -770,7 +786,7 @@ public class Gui extends JFrame {
 
 
 		// ===================== INÍCIO: CONSULTAR BOLETIM =====================
-		// Busca os dados do aluno e monta o boletim em formato de texto
+		// Busca o aluno pelo RGM e monta o boletim em texto, sem depender de campos fixos
 		btnConsultarBoletim.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -798,21 +814,24 @@ public class Gui extends JFrame {
 					tf_NomeBoletim.setText(aluno.getNome());
 					tf_CursoBoletim.setText(curso.getCurso());
 
-					// Busca todas as notas cadastradas para esse aluno
+					// Recebe uma lista porque o aluno pode ter várias disciplinas cadastradas
 					List<Nota> notas = dao.consultarNotasBoletim(rgm);
 
+					// Se a lista veio vazia, o aluno existe, mas ainda não possui notas cadastradas
 					if (notas.isEmpty()) {
 						JOptionPane.showMessageDialog(null, "Aluno encontrado, mas não há notas cadastradas.");
 						ta_Boletim.setText(null);
 						return;
 					}
 
+					// StringBuilder evita ficar concatenando Strings soltas e facilita montar o relatório final
 					StringBuilder textoBoletim = new StringBuilder();
 
 					textoBoletim.append("Curso: ")
 							.append(curso.getCurso())
 							.append("\n\n");
 
+					// Para cada nota encontrada no banco, uma parte do texto do boletim é montada
 					for (Nota n : notas) {
 						textoBoletim.append("Disciplina: ")
 								.append(n.getDisciplina())
@@ -833,6 +852,7 @@ public class Gui extends JFrame {
 						textoBoletim.append("-----------------------------\n");
 					}
 
+					// Converte o StringBuilder para String e mostra o resultado dentro do JTextArea
 					ta_Boletim.setText(textoBoletim.toString());
 
 					JOptionPane.showMessageDialog(null, "Boletim consultado com sucesso!");
